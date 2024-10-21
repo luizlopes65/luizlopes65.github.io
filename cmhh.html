@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz aniversário, menina bunita!</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6e6;
+            background-image: url("core.svg");
+            background-size: 30px 30px;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 80%;
+        }
+        h1 {
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            opacity: 0;
+        }
+        #message {
+            font-size: 20px;
+            color: #4a4a4a;
+            margin-bottom: 10px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+        }
+        #source {
+            font-size: 16px;
+            color: #888;
+            font-style: italic;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        .fade-in {
+            animation: fadeIn 2s forwards;
+        }
+        .fade-out {
+            animation: fadeOut 2s forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title"></h1>
+        <p id="message"></p>
+        <p id="source"></p>
+    </div>
+
+    <script>
+        const quotes = [
+    { frase: "Para conseguir o que quer, você deve olhar além do que você vê.", filme_fonte: "Filme (O Rei Leão 3)" },
+    { frase: "São os seus defeitos que fazem de você uma pessoa única.", filme_fonte: "A Bela e a Fera" },
+    { frase: "Quando a vida te decepciona, qual é a solução? Simplesmente continue a nadar.", filme_fonte: "Procurando Nemo" },
+    { frase: "Sim, o passado pode machucar. Mas, do modo como vejo, você pode fugir dele ou aprender com ele.", filme_fonte: "O Rei Leão" },
+    { frase: "Não enxergue o mundo como ele é, enxergue como ele poderia ser.", filme_fonte: "Cinderela- O filme" },
+    { frase: "Nunca devemos julgar as pessoas pela aparência, pois elas podem nos surpreender.", filme_fonte: "A Bela e a Fera" },
+    { frase: "A jornada de mil quilômetros começa com o primeiro passo.", filme_fonte: "O Rei Leão" },
+    { frase: "Quando o mundo vira as costas para você, você vira as costas para o mundo.", filme_fonte: "O Rei Leão" },
+    { frase: "Temos aqui uma garota estranha, tão distraída, lá vai ela. Não se dá com o pessoal, pensa que é especial.", filme_fonte: "A Bela e a Fera" },
+    { frase: "Pense em uma coisa que você sempre quis. Agora a encontre com os olhos da mente e a sinta no seu coração.", filme_fonte: "A Bela e a Fera" },
+    { frase: "Que importa o mal que te atormenta, se o sonho te contenta e pode realizar-se?", filme_fonte: "O Rei Leão" },
+    { frase: "Olha para dentro de ti mesmo. És mais do que aquilo em que te tornaste. Deves tomar o teu papel no círculo da vida.", filme_fonte: "A Bela e a Fera" },
+    { frase: "Enquanto os outros pensam no que podem ganhar, um verdadeiro rei pensa no que ele pode dar.", filme_fonte: "O Rei Leão (filme)" },
+    { frase: "A vida é um ciclo sem fim...", filme_fonte: "Mufasa - Rei Leão" },
+    { frase: "À procura de ajuda eu encontrei você, será que não entende? Você é a unica esperança.", filme_fonte: "O Rei Leão" },
+    { frase: "As melhores coisas acontecem por acaso.", filme_fonte: "Procurando Dory" },
+    { frase: "Minha querida Bela, você está tão à frente do seu tempo. Essa é uma vila pequena, com mentes pequenas também. Mas pequeno também significa seguro.", filme_fonte: "A Bela e a Fera" },
+    { frase: "Meu sonho não seria completo sem você.", filme_fonte: "A Princesa e o Sapo" },
+    { frase: "Você pode ter beleza e poder, muita sofisticação, mas o importante é mesmo o coração.", filme_fonte: "Cinderela 2 - Os Sonhos Se Realizam" },
+    { frase: "Deus da floresta, me deixe voltar para ele. É minha única vontade. Meu único desejo.", filme_fonte: "A Bela e a Fera" },
+    { frase: "Mas naquele silêncio solene, escuta-se o sopro do está adormecido. Olhe, olhe pra mim... venha acordar-me, pois estou aqui em vida.", filme_fonte: "A Bela e a Fera" },
+    { frase: "Confiar, é o que os amigos fazem.", filme_fonte: "Procurando Nemo" },
+    { frase: "E os medos que uma vez me controlaram Não chegam nem perto de mim", filme_fonte: "Frozen" },
+    { frase: "Podemos ter nossas diferenças, mas nada é mais importante que a família.", filme_fonte: "Viva – A Vida é uma Festa" },
+    { frase: "A vida não é justa, não é, amiguinho? Enquanto uns nascem para o banquete, outros passam a vida na escuridão, implorando por restos.", filme_fonte: "O Rei Leão (filme)" },        
+    { frase: "Bela: Você leu mesmo todos esses livros? Fera: Não, não li todos. Alguns estão em grego. Bela: [rindo] Isso foi uma piada? Você está fazendo piadas agora?", filme_fonte: "A Bela e a Fera" },
+    { frase: "Tudo o que você vê existe em um equilíbrio delicado.", filme_fonte: "O Rei Leão (filme)" },
+    { frase: "Bela: Nunca te agradeci por salvar a minha vida. Fera: Bem, eu também nunca te agradeci por não ter me abandonado para ser comido pelos lobos.", filme_fonte: "A Bela e a Fera" },
+    { frase: "Você deve lembrar quem você é. O único rei verdadeiro.", filme_fonte: "O Rei Leão (filme)" },
+    { frase: "Você deve colocar o seu traseiro no passado.", filme_fonte: "Pumba, do filme O Rei Leão." },
+    { frase: "O passado não é o que parece ser. Você deve encarar a verdade. (Pabbie)", filme_fonte: "Rafiki e Simba (Rei Leão)" },
+    { frase: "Quando a vida me deixa triste, eu toco a minha guitarra. O resto do mundo pode seguir as regras, mas eu tenho que seguir o meu coração.", filme_fonte: "Viva – A Vida é uma Festa" },
+    { frase: "Ninguém ia me entregar o meu futuro de mão beijada, alcançar o meu sonho dependia de mim, segurá-lo com força e torná-lo realidade.", filme_fonte: "O Rei Leão (Timão)" },
+    { frase: "Os seus problemas você deve esquecer. Isso é viver, é aprender. Hakuna Matata.", filme_fonte: "Viva – A Vida é uma Festa" },
+    { frase: "Barbie: Quando vou te ver outra vez? Ken: Hoje à noite … quando eu sonhar", filme_fonte: "Barbie" },
+    { frase: "Eu tenho que cantar. A música não está só em mim. A música sou eu.", filme_fonte: "Viva – A Vida é uma Festa" },
+    { frase: "Minha avó disse que a morte não existe. Ela acreditava que só morremos quando os outros nos esquecem.", filme_fonte: "Viva – A Vida é uma Festa" },
+    { frase: "Você vai ajudar a criar memórias felizes que vão durar o resto da vida dela.", filme_fonte: "Toy Story 4" },
+    { frase: "Eu escalei as Montanhas do Norte, sobrevivi a um coração congelado e te salvei do meu ex-namorado, então, já sabe, eu tô indo. (Anna)", filme_fonte: "Frozen 2" },
+    { frase: "– Você não pode me seguir pelo fogo. (Elsa) – Então não corra pelo fogo. (Anna)", filme_fonte: "Frozen 2" },
+    { frase: "⁠Vai ser um ótimo dia, que vai virar uma ótima semana, que vai virar um ótimo ano, que vai virar uma ótima vida! (Alegria)", filme_fonte: "Divertida Mente (filme)" },
+    { frase: "– Quando coisas ruins acontece, ninguém pode fazer nada pra evitar, certo? – Certo! – Errado – Quando o mundo vira as costas pra você, você vira as costas para o mundo.", filme_fonte: "O Rei Leão" },
+    { frase: "Eu te vejo hoje à noite quando eu sonhar.", filme_fonte: "Toy Story 3" },
+    { frase: "Sinceramente, quem liga pro que eu penso? Pro que os outros pensam? O que importa é o que você acha quando se vê no espelho.", filme_fonte: "Cinderela (2021)" },
+    { frase: "Perguntinha: Esse lance de nos colocar no perigo mortal vai passar a ser normal? (Olaf)", filme_fonte: "Frozen 2" },
+    { frase: "Eu acredito em você, Elsa, mais do que em qualquer coisa. (Anna)", filme_fonte: "Frozen 2" },
+    { frase: "⁠Não importa o quanto eu tentasse, eu não conseguiria te esquecer.", filme_fonte: "Procurando Dory" },
+    { frase: "Estar lá para uma criança é a coisa mais nobre que um brinquedo pode fazer.", filme_fonte: "Toy Story 4" },
+    { frase: "⁠Leva ela pra lua por mim! (Bing Bong)", filme_fonte: "Divertida Mente (filme)" },
+    { frase: "⁠Você não pode olhar só o que vai mal. Sempre tem como dar um jeito. É só fazer uma força. (Alegria)", filme_fonte: "Divertida Mente (filme)" },
+    { frase: "⁠Eu li uma vez que um quarto vazio é uma oportunidade. (Alegria)", filme_fonte: "Divertida Mente (filme)" },
+    { frase: "⁠Vivemos mais um dia! Isso é o que eu chamo de um verdadeiro sucesso. (Medo)", filme_fonte: "Divertida Mente (filme)" },
+    { frase: "⁠Quando algo é muito difícil... Sempre há outra maneira.", filme_fonte: "Procurando Dory" },
+    { frase: "Seja quem você é agora.", filme_fonte: "Toy Story 4" },
+    { frase: "Se você ficar em uma estante para o resto da sua vida, nunca descobrirá...", filme_fonte: "Toy Story 4" },
+    { frase: "Viver cativa acenando do balcão real é igual a viver confinada no porão. Tenho sonhos. Preciso realizá-los. Então, se for para escolher… Eu escolho a mim.", filme_fonte: "Cinderela (2021)" },
+    { frase: "⁠Já olhou pra uma pessoa e pensou: “O que passa na cabeça dela?” (Alegria)", filme_fonte: "Divertida Mente (filme)" },
+    { frase: "⁠Olaf: Quem é o burro esquisito a olhar para mim? Anna: É o Sven. Olaf: E a rena? Anna: O Sven?", filme_fonte: "Frozen" },
+    { frase: "Há pessoas pelas quais vale a pena derreter. (Olaf)", filme_fonte: "Frozen" },
+    { frase: "Para o infinito e mais além. (Buzz)", filme_fonte: "Toy Story" },
+    { frase: "Não deixe que as aparências te enganem. A verdadeira beleza está dentro de nós.", filme_fonte: "A Bela e a Fera" },
+    { frase: "⁠A gente aprende que toda e qualquer emoção é boa para Riley. (Alegria)", filme_fonte: "Divertida Mente 2 (filme)" },
+    { frase: "⁠Nada está perdido se está divertido. (Alegria)", filme_fonte: "Divertida Mente 2 (filme)" },
+    { frase: "⁠Eu sei que mudança assusta. (Ansiedade)", filme_fonte: "Divertida Mente 2 (filme)" },
+    { frase: "⁠Ninguém é totalmente inútil. (Nojinho)", filme_fonte: "Divertida Mente 2 (filme)" },
+    { frase: "⁠Naveen: estou fazer pelo teu sonho Tiana: o meu sonho não estará completo se tu não estiveres nele", filme_fonte: "O Rei Leão" },
+    { frase: "⁠O amor encontrará um caminho", filme_fonte: "O Rei Leão" },
+    { frase: "⁠O amor é colocar as necessidades de outra pessoa antes das suas", filme_fonte: "Cinderela e as palavras da mãe dela." },
+    { frase: "⁠Quer saber? Você não pode se concentrar somente no que dá errado. Sempre há uma maneira de encontrar alguma diversão nas coisas.", filme_fonte: "Frozen" },
+    { frase: "⁠De vez em quando eu sinto um cheiro. É muito suave no vento e me lembra da minha casa.", filme_fonte: "Doce Cinderela" },
+    { frase: "⁠Você escolherá seu destino.", filme_fonte: "Divertida Mente (filme)" },
+    { frase: "Para conseguir o que quer, você deve olhar além do que você vê.", filme_fonte: "Filme (O Rei Leão 3)" },
+    { frase: "A cada dia que passa nos tornamos menos humanos.", filme_fonte: "A Bela e a Fera" },
+    { frase: "Pense em uma coisa que você sempre quis. Agora a encontre com os olhos da mente e a sinta no seu coração.", filme_fonte: "A Bela e a Fera" },
+    { frase: "- Ai, por que me bateu? - Não importa é passado! - Mas ainda dói! - O passado pode doer, mas você pode fugir dele ou aprender com ele.", filme_fonte: "O Rei Leão" },
+    { frase: "E depois de tanta dor A vida enfim me ensinou que Não importa o quanto chorei hoje O sol sempre nascerá novamente amanhã Secando minhas lágrimas Renovando minha alma.", filme_fonte: "Procurando Nemo" },
+    { frase: "Que importa o mal que te atormenta, se o sonho te contenta e pode realizar-se?", filme_fonte: "O Rei Leão" },
+    { frase: "- Eu confesso que nunca senti isso por ninguém. Quero fazer alguma coisa por ela, mas o quê? - Ahn... as coisas costumeiras: flores, chocolates, ...", filme_fonte: "Cinderela" },
+    { frase: "Eu prefiro morrer amanhã do que viver 100 anos sem te conhecer.", filme_fonte: "John Smith (Pocahontas)" },
+    { frase: "As pessoas sempre fazem coisas malucas quando estão apaixonadas.", filme_fonte: "Meg (Hércules)" },
+    { frase: "Porque quando eu olho para você… eu posso sentir. Eu olho para você e estou em casa!", filme_fonte: "Dory (Procurando Nemo)" },
+    { frase: "Meu sonho nunca será completo sem você nele.", filme_fonte: "Princesa Tiana (A Princesa e o Sapo)" },
+    { frase: "Pois é simples como qualquer um pode ver: estamos simplesmente destinados a ser.", filme_fonte: "Jack e Sally (O Estranho Mundo de Jack)" },
+    { frase: "O amor é colocar as necessidades de outras pessoas antes das suas.", filme_fonte: "Olaf (Frozen)" },
+    { frase: "Então é isso o amor! Isso que faz a vida parecer divina.", filme_fonte: "Cinderela (Cinderela)" },
+    { frase: "Ohana significa família. Família quer dizer “nunca mais abandonar ou esquecer”.", filme_fonte: "Stitch (Lilo & Stitch)" },
+    { frase: "Não importa como seu coração está aflito, se você continuar acreditando, o sonho que você deseja se tornará realidade.", filme_fonte: "Cinderela (Cinderela)" },
+    { frase: "Eu acabei de te conhecer e já te amo.", filme_fonte: "Dug (Up! Altas Aventuras)" },
+    { frase: "O amor é uma porta aberta.", filme_fonte: "Anna and Hans (Frozen)" },
+    { frase: "Você é minha maior aventura.", filme_fonte: "Senhor Incrível (Os Incríveis)" },
+    { frase: "Muito melhor que uma garota dos sonhos é uma de carne e osso. Com amor e carinho para dar. E ela está bem diante dos seus olhos.", filme_fonte: "Grimsby (A Pequena Sereia)" },    
+    { frase: "O amor é uma música que nunca termina.", filme_fonte: "Bambi (Bambi)" },
+    { frase: "Você conhece aquele lugar entre dormir e acordar, o lugar onde você ainda pode lembrar de sonhar? É onde eu sempre te amarei. É onde eu estarei esperando.", filme_fonte: "Peter Pan (Peter Pan)" },
+    { frase: "Deixe-me compartilhar esse novo mundo com você.", filme_fonte: "Aladim (Aladim)" },
+    { frase: "Ela o advertiu para não ser enganado pelas aparências, pois a beleza pode ser encontrada dentro de você.", filme_fonte: "(A Bela e a Fera)" },
+    { frase: "Não há nada que eu não faria por você, você tem um amigo em mim.", filme_fonte: "(Toy Story)" },
+    { frase: "Como se soletra amor? Você não soletra isso, você sente isso.", filme_fonte: "Pooh (O Ursinho Pooh)" }
+];
+
+const titles = [
+            "Uma mensagem pra você, gatinha",
+            "O que será que a gente vai ler hoje...",
+            "No nível de Panza llena...? Acho que não:",
+            "Se tiver em inglês, I'm sorry",
+            "Você ta bonita em? Nem to te vendo, mas tenho certeza",
+            "PÃ PÃ PÃ PÃÃÃÃÃÃÃ",
+            "Que dia bonito pra te ver sorrir",
+            "Espero que seja uma das boas...",
+            "Você merece suspresas...",
+            "Bom dia (tarde? noite?), gatinha"
+        ];
+
+        function displayMessage() {
+            const titleElement = document.getElementById('title');
+            const messageElement = document.getElementById('message');
+            const sourceElement = document.getElementById('source');
+
+            const randomQuoteIndex = Math.floor(Math.random() * quotes.length);
+            const randomTitleIndex = Math.floor(Math.random() * titles.length);
+            const quote = quotes[randomQuoteIndex];
+            const title = titles[randomTitleIndex];
+
+            console.log('Exibindo título:', title);
+            console.log('Exibindo citação:', quote);
+
+            titleElement.textContent = title;
+            titleElement.classList.add('fade-in');
+            
+            setTimeout(() => {
+                titleElement.classList.remove('fade-in');
+                titleElement.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    messageElement.textContent = quote.frase;
+                    sourceElement.textContent = `- ${quote.filme_fonte}`;
+                    
+                    messageElement.classList.remove('fade-out');
+                    sourceElement.classList.remove('fade-out');
+                    messageElement.classList.add('fade-in');
+                    sourceElement.classList.add('fade-in');
+                }, 2000);
+            }, 1500);
+        }
+
+        window.onload = displayMessage;
+    </script>
+</body>
+</html>
