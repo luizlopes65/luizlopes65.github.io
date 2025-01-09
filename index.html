@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feliz aniversário, menina bunita!</title>
+    <title>Feliz com você.</title>
     <style>
         body {
             font-family: 'Times New Roman', sans-serif;
@@ -45,6 +45,15 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             text-align: center;
             max-width: 80%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .image {
+            max-width: 300px;
+            max-height: 300px;
+            margin-top: 10px;
+            border-radius: 10px;
         }
         h1 {
             color: #ff6b6b;
@@ -81,17 +90,45 @@
         .fade-out {
             animation: fadeOut 2s forwards;
         }
+        .buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .buttons button {
+            padding: 10px;
+            border: none;
+            background-color: #ff6b6b;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .buttons button:hover {
+            background-color: #ff4a4a;
+        }
     </style>
 </head>
 <body>
+    <div class="buttons">
+        <button onclick="showMessage(title='Primeiro mês', message=primeiro_texto, backText=primeiro_back_text, imageUrl='primeira_foto.jpeg')">Primeiro Mês</button>
+        <button onclick="showMessage(title='Segundo mês', message=segundo_texto, backText=segundo_back_text , imageUrl='')">Segundo Mês</button>
+    </div>
     <div class="container">
         <h1 id="title"></h1>
         <p id="message"></p>
+        <img id="image" class="image" src="" alt="" style="display: none;" />
         <p id="source"></p>
     </div>
 
-
     <script>
+        const primeiro_back_text = "Do que adianta estudar o universo, se foi nos seus olhos que encontrei a verdade sobre as estrelas. Ao meio dia, é no seu sorriso que está guardada a riqueza que a humanidade tanto procura. E no perigo que meu coração não aguente, eu insisto nesse sentimento diferente, que é ser besta por você. Do que adianta correr contra o tempo, se não for pra correr até você, e o seu carinho. Como eu sei que vai ser difícil, difícil lembrar de esquecer: o que os anjos tem procurado, encontrei em você. E no perigo que meu coração não aguente, eu insisto nesse sentimento diferente, que é ser besta por você.";
+        const segundo_back_text = "Don't wanna be forward Don't wanna cross a line But if I were to crash in this plane tonight I'd want you to know this Don't wanna say too much Intrude on your space But if I were to crash and I never made it home I'd want you to know this Oh, and to tell you is too scary So I'll just say something else And I wish that you could hear me When I talk to myself But this plane might not land safely So, what the hell do I have to lose If I just tell you? I wanna eat pancakes for dinner I wanna get stuck in your head I wanna watch a T.V. show together And when we're under the weather we can watch it in bed I wanna go out on the weekends I wanna dress up just to get undressed I think that I should probably tell you this In case there is an accident And I never see you again So please save all your questions for the end And maybe I'll be brave enough by then Don't wanna say something wrong Don't wanna be weird But if you're still in love with her I think that I'll leave it there And I won't ever tell you this Oh, 'cause to tell you is too scary So I'll just say something else Like how was fall semester? And what was that song about? I'll try to hide the way I feel But I'll just wanna shout What do I have to lose right now? I wanna eat pancakes for dinner I wanna get stuck in your head I wanna watch a T.V. show together And when we're under the weather we can watch it in bed I wanna go out on the weekends I wanna dress up just to get undressed I think that I should probably tell you this In case there is an accident And I never see you again So please save all your questions for the end And maybe I'll be brave enough by then Well, maybe I won't ever say what's in my head No, I won't have to say anything You'll say it instead. Don't wanna be forward Don't wanna cross a line But if I were to crash in this plane tonight I'd want you to know this Don't wanna say too much Intrude on your space But if I were to crash and I never made it home I'd want you to know this Oh, and to tell you is too scary So I'll just say something else And I wish that you could hear me When I talk to myself But this plane might not land safely So, what the hell do I have to lose If I just tell you? I wanna eat pancakes for dinner I wanna get stuck in your head I wanna watch a T.V. show together And when we're under the weather we can watch it in bed I wanna go out on the weekends I wanna dress up just to get undressed I think that I should probably tell you this In case there is an accident And I never see you again So please save all your questions for the end And maybe I'll be brave enough by then Don't wanna say something wrong Don't wanna be weird But if you're still in love with her I think that I'll leave it there And I won't ever tell you this Oh, 'cause to tell you is too scary So I'll just say something else Like how was fall semester? And what was that song about? I'll try to hide the way I feel But I'll just wanna shout What do I have to lose right now? I wanna eat pancakes for dinner I wanna get stuck in your head I wanna watch a T.V. show together And when we're under the weather we can watch it in bed I wanna go out on the weekends I wanna dress up just to get undressed I think that I should probably tell you this In case there is an accident And I never see you again So please save all your questions for the end And maybe I'll be brave enough by then Well, maybe I won't ever say what's in my head No, I won't have to say anything You'll say it instead";
+        const primeiro_texto = "Nosso primeiro dia 10! Nesse primeiro mês, ainda estamos entendendo como funciona estar tão ligado um ao outro, mas tudo parece tão fluído, leve. É novo, mas eu estou tão feliz que é com você. Você estava tão linda quanto no nosso primeiro date. No meio de todo mundo, no shooping, eu só conseguia pensar que queria te ver e te abraçar. Compramos os livros um para o outro, é bobo, mas nele eu carrego um pouquinho de você. Que memória boa: ficamos até tarde conversando, na horizontal, depois de eu ter exagerado no rodízio de sushi. Eu estava muito ansioso para saber o que vinha pela frente... ";
+        const segundo_texto = "Olha só! Já chegou o nosso segundo dia 10! Um mês mais difícil pra gente, passamos longe um do outro boa parte dele. Apesar da saudade, eu só consigo agradecer. Sei que são muitas coisas novas, que a gente está se descobrindo e descobrindo junto. Mas eu quero ser pra sempre o seu aliado nessa aventura. Quero estar com você por toda a trilha, seja observando paisagens lindas pela malha da nossa barraca, seja nadando em cachoeiras inimagináveis, mas seja também subindo trajetos difíceis e cansativos. Eu sei que vou ser grato em todos os momentos, porque vou estar com você. Obrigado por ser quem você é. Eu não consigo nem chegar perto de te mostrar o tanto que eu me considero sortudo por ter você na minha vida. Ainda mais como minha amiga. Ainda mais como minha namorada. Ansioso por o que vem pela frente.❤️ ";
         const quotes = [
     { frase: "Para conseguir o que quer, você deve olhar além do que você vê.", filme_fonte: "Filme (O Rei Leão 3)" },
     { frase: "São os seus defeitos que fazem de você uma pessoa única.", filme_fonte: "A Bela e a Fera" },
@@ -224,15 +261,14 @@
     { frase: "Você sabe mesmo como fazer um cara se sentir bem.", filme_fonte: "Camp Rock" }
 ];
 
-
-const titles = [
-            "Uma mensagem pra você, gatinha",
+        const titles = [
+            "Uma mensagem pra você, gatinha ❤️",
             "O que será que a gente vai ler hoje...",
             "No nível de Panza llena...? Acho que não:",
             "Se tiver em inglês, I'm sorry",
             "Você ta bonita em? Nem to te vendo, mas tenho certeza",
             "PÃ PÃ PÃÃÃÃÃÃÃ",
-            "Que dia bonito pra te ver sorrir",
+            "Que dia bonito pra te ver sorrir ❤️",
             "Espero que seja uma das boas...",
             "Você merece suspresas...",
             "Bom dia (tarde? noite?), gatinha"
@@ -254,9 +290,41 @@ const titles = [
             document.body.className = randomPattern;
         }
 
+        let customMessageActive = false; 
+
+        function showMessage(title, message, backText, imageUrl) {
+            customMessageActive = true;
+
+            setRepeatingLyricsPattern(backText)
+
+            const titleElement = document.getElementById('title');
+            const messageElement = document.getElementById('message');
+            const imageElement = document.getElementById('image');
+            const sourceElement = document.getElementById('source');
+
+            titleElement.textContent = title;
+            messageElement.textContent = message;
+            sourceElement.textContent = "";
+
+            if (imageUrl) {
+                imageElement.src = imageUrl;
+                imageElement.style.display = 'block';
+            } else {
+                imageElement.style.display = 'none';
+            }
+
+            titleElement.classList.remove('fade-out');
+            messageElement.classList.remove('fade-out');
+
+            titleElement.classList.add('fade-in');
+            messageElement.classList.add('fade-in');
+        }
+
         function displayMessage() {
+            if (customMessageActive) return; 
+
             setRandomBackground();
-            
+
             const titleElement = document.getElementById('title');
             const messageElement = document.getElementById('message');
             const sourceElement = document.getElementById('source');
@@ -268,21 +336,76 @@ const titles = [
 
             titleElement.textContent = title;
             titleElement.classList.add('fade-in');
-            
+
             setTimeout(() => {
+                if (customMessageActive) return; 
+
                 titleElement.classList.remove('fade-in');
                 titleElement.classList.add('fade-out');
-                
+
                 setTimeout(() => {
+                    if (customMessageActive) return; 
                     messageElement.textContent = quote.frase;
                     sourceElement.textContent = `- ${quote.filme_fonte}`;
-                    
+
                     messageElement.classList.remove('fade-out');
                     sourceElement.classList.remove('fade-out');
                     messageElement.classList.add('fade-in');
                     sourceElement.classList.add('fade-in');
                 }, 2000);
             }, 1500);
+        }
+        
+        function encodeToBase64(str) {
+            return btoa(unescape(encodeURIComponent(str)));
+}
+
+        function setRepeatingLyricsPattern(lyrics) {
+            if (lyrics.length < 50) {
+                lyrics = lyrics.repeat(10); 
+            }
+
+            const fontSize = 16;
+            const lineHeight = fontSize + 4;
+            const screenWidth = window.outerWidth;
+            const screenHeight = window.outerHeight;
+            const words = lyrics.split(" ");
+            let lines = [];
+            let currentLine = "";
+
+            words.forEach((word) => {
+                const testLine = currentLine + (currentLine ? " " : "") + word;
+                const testLineWidth = testLine.length * fontSize * 0.6;
+                if (testLineWidth <= screenWidth) {
+                    currentLine = testLine;
+                } else {
+                    lines.push(currentLine);
+                    currentLine = word;
+                }
+            });
+
+            if (currentLine) lines.push(currentLine);
+
+            while (lines.length * lineHeight < screenHeight) {
+                lines = lines.concat(lines);
+            }
+
+            const svgPattern = `
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${screenWidth}" height="${lineHeight * lines.length}" xml:lang="pt-BR">
+                    <rect width="100%" height="100%" fill="#ffe6e6"/>
+                    ${lines
+                        .map(
+                            (line, index) =>
+                                `<text x="0" y="${lineHeight * (index + 1)}" font-size="${fontSize}" fill="#ff6b6b" font-family="Arial, sans-serif">${line}</text>`
+                        )
+                        .join("")}
+                </svg>
+            `;
+
+            const svgEncoded = `data:image/svg+xml;base64,${encodeToBase64(svgPattern)}`;
+            document.body.style.backgroundImage = `url("${svgEncoded}")`;
+            document.body.style.backgroundRepeat = "repeat";
+            document.body.style.backgroundSize = `${screenWidth}px ${lineHeight * lines.length}px`;
         }
 
         window.onload = displayMessage;
