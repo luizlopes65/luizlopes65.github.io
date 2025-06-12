@@ -111,9 +111,45 @@
         .buttons button:hover {
             background-color: #ff4a4a;
         }
+
+        /* Galeria overlay */
+        .gallery {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        .gallery img {
+            max-width: 200px;
+            margin: 10px;
+            border: 3px solid #fff;
+            border-radius: 10px;
+        }
+        .gallery .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
-    
 <body>
     <div class="buttons">
         <button onclick="showMessage(title='Primeiro mês', message=primeiro_texto, backText=primeiro_back_text, imageUrl='primeira_foto.jpeg')">Primeiro Mês</button>
@@ -122,12 +158,26 @@
         <button onclick="showMessage(title='Quarto mês', message=quarto_texto, backText=quarto_back_text , imageUrl='quarta_foto.jpeg')">Quarto Mês</button>
         <button onclick="showMessage(title='Quinto mês', message=quinto_texto, backText=quinto_back_text , imageUrl='quinta_foto.jpeg')">Quinto Mês</button>
         <button onclick="showMessage(title='Sexto mês', message=sexto_texto, backText=sexto_back_text , imageUrl='sexta_foto.jpeg')">Sexto Mês</button>
+        <button onclick="showMessage(title='Sétimo mês', message=sétimo_texto, backText=sétimo_back_text , imageUrl='setima_foto.jpeg')">Sétimo Mês</button>
+        <!-- Botão da Galeria -->
+        <button onclick="toggleGallery()">Ver Galeria</button>
     </div>
     <div class="container">
         <h1 id="title"></h1>
         <p id="message"></p>
         <img id="image" class="image" src="" alt="" style="display: none;" />
         <p id="source"></p>
+    </div>
+
+    <div id="gallery" class="gallery hidden">
+        <button class="close-btn" onclick="toggleGallery()">Fechar</button>
+        <img src="fotos/primeira_foto.jpeg" alt="Foto 1">
+        <img src="fotos/segunda_foto.jpeg" alt="Foto 2">
+        <img src="fotos/terceira_foto.jpeg" alt="Foto 3">
+        <img src="fotos/quarta_foto.jpeg" alt="Foto 4">
+        <img src="fotos/quinta_foto.jpeg" alt="Foto 5">
+        <img src="fotos/sexta_foto.jpeg" alt="Foto 6">
+        <img src="fotos/setima_foto.jpeg" alt="Foto 7">
     </div>
 
     <script>
@@ -137,12 +187,14 @@
         const quarto_back_text = `It's not a silly little moment It's not the storm before the calm This is the deep and dying breath of This love that we've been workin on Can't seem to hold you like I want to So I can feel you in my arms Nobody's gonna come and save you We pulled to many false alarms We're going down And you can see it too We're going down And you know that we're doomed My dear We're slow dancing in a burning room I was the one you always dreamed of You were the one I tried to draw How dare you say it's nothing to me Baby, you're the only light I ever saw I'll make the most of all the sadness You'll be a bitch because you can You'll try to hit me just to hurt me So you leave me feeling dirty cause you can't understand We're going down And you can see it too We're going down And you know that we're doomed My dear, We're slow dancing in a burning room Go cry about it why don't you Go cry about it why don't you Go cry about it why don't you My dear, we're slow dancing in a burning room Burning room, burning room Don't you think we oughta know by now Don't you think we shoulda learned somehow Don't you think we oughta know by now Don't you think we shoulda learned somehow Don't you think we oughta know by now Don't you think we shoulda learned somehow Don't you think we shoulda learned somehow`
         const quinto_back_text = 'Quando eu chego em casa e você não está Penso em te procurar mesmo sabendo que vais voltar Se um dia foi diferente É porque tudo era diferente O teu amor me pôs de pé Vem cortar meus cabelos Vou molhar os teus olhos E o meu peito mais aberto que o mar da Bahia Eu só queria te contar Tudo que faz em mim Ah! Ah! Ah! Quem diria que seria tão bonito assim viver? Tão bonito assim olhar alguém Quem diria que seria tão bonito assim viver? Tão bonito assim olhar alguém E não sentir medo? E não sentir frio? Não sentir vontade Que não seja de infinito? Podes me chamar Podes me chamar Quando eu chego em casa e você não está Penso em te procurar mesmo sabendo que vais voltar E os teus modos tão bonitos que eu estranho de onde vem Só há uma língua entre nós Só há uma língua entre nós E eu só queria te guardar Onde eu pudesse ter sempre que eu sentisse medo Tudo então seria pra dizer Que o teu amor sem fim já mudou a minha vida  Ah! Ah! Ah! Quem diria que seria tão bonito assim viver? Tão bonito assim olhar alguém?'
         const sexto_back_text = `Time to lighten up I don't plan to I don't plan to Time I gave it up I don't plan to I don't plan to Every eye is on us Every side is on us Sing it with pride and promise Never cry, never cry But you know we like it honest You know it's why we bought you I like your style and all But do it right Do it in Time to lighten up I don't plan to I don't plan to Time I gave it up I don't plan to I don't plan to I need it, I love it The music, the time it takes for the letter to write back Let it go, let it go 'Cause this is the final product Drink it a while and call us Sell it for dimes and dollars There you go Time to lighten up I don't plan to I don't plan to Time I gave it up I don't plan to I don't plan to`
+        const sétimo_back_text = "Antes que eu soubesse, já estava com você. Quando eu te vi, não foi fácil entender. Demorou pra ver, demorou pra ser. Mas agora (mas agora) é. Quando chove na cidade, eu lembro de você. Daquela vez que caiu o céu e eu te coloquei debaixo de mim. Da primeira vez que você chorou, deitada no meu peito o coração, quente de dor e amor, quente de dor. Demorou pra ser, mas agora é. Demorou pra ser, mas agora é. Você é a vida da minha vida. Você é a vida da minha vida. Enquanto eu tiver saúde, enquanto eu tiver de pé, enquanto a gente se amar, enquanto a gente ainda tiver um coração tão cheio, tão cheio de amanhã. Vê? Meu coração tão cheio. Estou aqui. Demorou pra ser, mas agora é. Demorou pra ser, mas agora é."
         const primeiro_texto = " Ele: Nosso primeiro dia 10! Nesse primeiro mês, ainda estamos entendendo como funciona estar tão ligado um ao outro, mas tudo parece tão fluído, leve. É novo, mas eu estou tão feliz que é com você. Você estava tão linda quanto no nosso primeiro date. No meio de todo mundo, no shopping, eu só conseguia pensar que queria te ver e te abraçar. Compramos os livros um para o outro, é bobo, mas nele eu carrego um pouquinho de você. Que memória boa: ficamos até tarde conversando, na horizontal, depois de eu ter exagerado no rodízio de sushi. Eu estava muito ansioso para saber o que vinha pela frente... // // Ela: E cai no papinho do jogador mesmo! Quem diria, hein? Esse menino besta me deu o céu de presente e me mostrou uma versão que nem conhecia de mim mesma. Um chaveiro novo, fotinhos reveladas, um site de aniversário, uma caixinha linda, muuiittooss docinhos, chocolates e frutinhas, bandates, caminhadas até a fef, uma música e muitos poemas e elogios foram o saldo de algumas coisas que ele fez até aqui! Então, em meio a - muitas - lágrimas, respondi que namoraria ele (dá pra acreditar?)! Que mês feliz! ";
         const segundo_texto = " Ele: Olha só! Já chegou o nosso segundo dia 10! Um mês mais difícil pra gente, passamos longe um do outro boa parte dele. Apesar da saudade, eu só consigo agradecer. Sei que são muitas coisas novas, que a gente está se descobrindo e descobrindo junto. Mas eu quero ser pra sempre o seu aliado nessa aventura. Quero estar com você por toda a trilha, seja observando paisagens lindas pela malha da nossa barraca, seja nadando em cachoeiras inimagináveis, mas seja também subindo trajetos difíceis e cansativos. Eu sei que vou ser grato em todos os momentos, porque vou estar com você. Obrigado por ser quem você é. Eu não consigo nem chegar perto de te mostrar o tanto que eu me considero sortudo por ter você na minha vida. Ainda mais como minha amiga. Ainda mais como minha namorada. Ansioso por o que vem pela frente.❤️ // // Ela: Como tudo é mais difícil longe! Foi tudo tão intenso nos últimos meses, já que nos víamos (praticamente) todos os dias, que a distância abrupta assim é meio louca... Aprendemos mais um sobre o outro e criamos novos 'normais' que nos ajudam a nos manter conectados. No final, 900km foram percorridos por esse menino (e a família toda - até bentinho!) para que conseguíssemos passar dia 10 juntinhos! Conheci todos, fomos no cinema e recebi uma atualização linda do site enquanto comíamos pizza! Fiquei muito feliz e grata por ter ele ali do meu lado, segurando minha mão :) Mais uma vez a distância nos espera pro próximo período, mas estou muito ansiosa para nossas memórias de 2025!";
         const terceiro_texto = "Ele: Cá estamos novamente, meu bem! Dessa vez, de uma forma muito diferente. Apesar dos pesares, conseguimos aproveitar tudo o que deu do nosso dia e celebrar esse casal do ano, que somos nós! Eu fico muito orgulhoso de nós. Sei que não foi um mês tão simples, muitas coisas novas e muitos sentimentos novos. Saiba que eu sou muito grato e orgulhoso de poder estar ao seu lado e de te chamar de minha namorada. Você me inspira a ser melhor e ser o homem eu sempre aspirei a ser. Muito obrigado, eu te amo, e que venha o nosso ano! ❤️ // // Ela: Terceiro mês, que loucura! Parece que faz mais tempo na verdade.... Esse mês muitos sentimentos transbordaram e no fim, tudo fez parte da jornada que está sendo entender mais um ao outro. E, sinceramente, que legal! Gosto de como conversamos. Gosto da minha versão quando eu tô com você. Gosto de passar tempo com você. Você toma conta de mais um pedacinho do meu coraçãozinho a cada dia! Sinto que somos bem diferentes do que éramos há três meses e descobrir cada fase e mudança que temos é lindo! Obrigada por cada palavra (escrita ou falada), cada música, cada ligação, cada carinho, memoria, presente e por toda a dedicação e esforço que você coloca nessa relação! Eu tenho muita sorte! 'Saudade' foi resignificada com você:  eu literalmente sinto a sua falta. Mas logo, logo. :)";
         const quarto_texto = "Ele: Mais um momentinho pra parar, ver o mês que passou e ser grato por ter você do meu ladinho. Esse foi um mês de adaptações e de criação de uma nova rotina, mas a gente deu o nosso jeitinho de achar um tempo juntos. Sei que vão ter dias mais difíceis, assim como dias mais fáceis, mas eu sou muito grato de enfrentar os desafios com você. Você me inspira a ser melhor todo dia e a enfrentar os meus medos (que são muitos kkkkkkk). Muito obrigado por toda a compreensão e o abrigo que você me garante. É muito bom ser seu namorado. Conta comigo pra qualquer coisa. // // Ela: E estamos juntinhos de novo! Por mais que tenha sido difícil se separar mais uma vez de sua família, espero que eu consiga ajudar a diminuir um pouquinho do buraco que fica aí dentro. Agora é tudo novo! Rotina nova e novas dinâmicas pra gente. Obrigada por ter me levado em cada aula do CFC, por ter topado ir no bloquinho, por ter ido no postinho ouvir desabafos, por sempre me alimentar com comidinhas gostosas, por ser meu travesseiro até no shopping, por ser paciente, carinhoso e cuidadoso comigo. Termino o mês de pança llena de salmão e batatas, com lágrimas nos olhos (de novo) e um novo pingente no pescoço. Que venham os próximos!"
         const quinto_texto = "Ele: Oi meu amor, eu nem acho que tenho muito o que falar a mais do que já te falei. Saiba que você deixa meus dias muito mais reais. E esse mês, numa rotina já mais estruturada, eu vejo como ela é muito melhor com você. Espero que possamos criar muitas rotinas nossas ainda e que você possa continuar me surpreendendo sempre e me mostrando que rotina não implica em monotonia. Viva a gente!";
         const sexto_texto = "Ele: Oi amor, atualizando esse site eu vejo o quão louco é o tempo que passou. Sei que nem sempre é fácil e existem muitos desafios pela nossa frente, mas tenho muito orgulho de como lidamos com eles, e espero que continuemos trazendo leveza um para o outro, como eu sinto que fazemos, atualmente. Um mês de momentos gostosos, mas também de conversas difíceis. Crescemos juntos, e vamos continuar. Que venham muitas Mamma Jammas para nós pela frente.❤️"
+        const sétimo_texto = "Ele: Esse foi um mês de muitas coisas novas. Muitas mudanças na rotina e, por muitas vezes, até a falta dela. Mas você continua uma constante nos meus dias, e, sempre, torna eles mais especiais. Obrigado pela paciência e pela compreensão. Obrigado por me acompanhar nos meus objetivos, como a meia maratona. Já estou acostumado a fazer esse tipo de coisa sozinho, mas ter companhia é muito melhor, e quando a companhia é você... Ah, aí vira um dia para se lembrar. Ansioso para o que vem na nossa vida como um casal e feliz dia dos namorados.❤️"
         const quotes = [
     { frase: "Para conseguir o que quer, você deve olhar além do que você vê.", filme_fonte: "Filme (O Rei Leão 3)" },
     { frase: "São os seus defeitos que fazem de você uma pessoa única.", filme_fonte: "A Bela e a Fera" },
@@ -423,6 +475,10 @@
         }
 
         window.onload = displayMessage;
+        function toggleGallery() {
+                const gallery = document.getElementById('gallery');
+                gallery.classList.toggle('hidden');
+            }
     </script>
 </body>
 </html>
